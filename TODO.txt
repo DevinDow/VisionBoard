@@ -1,0 +1,18 @@
+﻿TODO
+----
+
+BUG: Image.FromFile() locks file, therefore save fails on locked filenames
+
+- Hot Keys
+
+- Reorder (move up/down)
+
+- Caption
+
+- Screen Saver
+	Options - choosing pause duration
+
+- Registration
+	Web site
+	PayPal
+	Check for updates
