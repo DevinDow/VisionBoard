@@ -19,11 +19,10 @@ namespace DevinDow.VisionBoard
             sfd.DefaultExt = ".vbd";
             sfd.Title = "Save Vision Board file";
             sfd.Filter = "Vision Board files (*.vbd)|*.vbd|All Files (*.*)|*.*";
+            sfd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            sfd.FileName = "VisionBoard.vbd";
             if (sfd.ShowDialog() == DialogResult.OK)
             {
-                /*RegistryKey key = Registry.CurrentUser.CreateSubKey("Software\\VisionBoard");
-                key.SetValue("currentVbdFile", sfd.FileName);
-                key.Close();*/
                 Properties.Settings.Default.CurrentVisionBoardFile = sfd.FileName;
                 Properties.Settings.Default.Save();
 
@@ -61,13 +60,14 @@ namespace DevinDow.VisionBoard
             visionBoard.IsDirty = false;
         }
 
+
         public static VisionBoard Read()
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.DefaultExt = ".vbd";
             ofd.Title = "Save Vision Board file";
             ofd.Filter = "Vision Board files (*.vbd)|*.vbd|All Files (*.*)|*.*";
-			ofd.FileName = Properties.Settings.Default.CurrentVisionBoardFile;
+            ofd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 			try 
 			{ 
 				FileInfo fi = new FileInfo(Properties.Settings.Default.CurrentVisionBoardFile);
@@ -77,9 +77,6 @@ namespace DevinDow.VisionBoard
             if (ofd.ShowDialog() != DialogResult.OK)
                 return null;
 
-            /*RegistryKey key = Registry.CurrentUser.CreateSubKey("Software\\VisionBoard");
-            key.SetValue("currentVbdFile", ofd.FileName);
-            key.Close();*/
             Properties.Settings.Default.CurrentVisionBoardFile = ofd.FileName;
             Properties.Settings.Default.Save();
 

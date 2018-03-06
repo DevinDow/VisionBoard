@@ -49,14 +49,8 @@ namespace DevinDow.VisionBoard
         {
             if (VisionBoard == null)
             {
-                // Load currentVbdFile
-                /*RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\VisionBoard");
-                object obj = key.GetValue("currentVbdFile");
-                key.Close();*/
                 VisionBoard = vbdFile.Read(Properties.Settings.Default.CurrentVisionBoardFile);
             }
-
-            //associateVbdExtension();
         }
 
         private void MainForm_Paint(object sender, PaintEventArgs e)
@@ -246,9 +240,6 @@ namespace DevinDow.VisionBoard
         {
             VisionBoard = new VisionBoard();
             Invalidate();
-            /*RegistryKey key = Registry.CurrentUser.CreateSubKey("Software\\VisionBoard");
-            key.SetValue("currentVbdFile", string.Empty);
-            key.Close();*/
             Properties.Settings.Default.CurrentVisionBoardFile = string.Empty;
             Properties.Settings.Default.Save();
         }

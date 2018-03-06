@@ -18,7 +18,7 @@ namespace DevinDow.VisionBoard
                 string exePath = asm.Location;
                 string scrPath = exePath.Replace(".exe", ".scr");
                 File.Copy(exePath, scrPath, true);
-                System.Diagnostics.Process.Start(scrPath);
+                System.Diagnostics.Process.Start(scrPath); // Launch default action on .scr, which is either "Install" or "Test".
             }
             catch (Exception ex)
             {

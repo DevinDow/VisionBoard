@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -33,19 +34,9 @@ namespace DevinDow.VisionBoard
         {
             if (VisionBoard == null)
             {
-                /*object obj = Microsoft.Win32.Registry.CurrentUser.GetValue("Software\\VisionBoard\\screensaverVbdFile");
-                if (obj == null)
-                {
-                    MessageBox.Show("Screensaver .VBD file not set");
-                    return;
-                }
-                string path = obj.ToString();
-                if (path.Length > 0)
-                {*/
-                string path = Environment.SystemDirectory + "\\VisionBoardScreenSaver.vbd";
-                    VisionBoard = vbdFile.Read(path);
-                    Invalidate();
-                //}
+                string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "VisionBoard.vbd");
+                VisionBoard = vbdFile.Read(path);
+                Invalidate();
 
                 if (VisionBoard == null)
                 {
