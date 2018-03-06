@@ -15,7 +15,10 @@ namespace DevinDow.VisionBoard
         
             try
             {
-                File.Copy(asm.Location, Environment.SystemDirectory + "\\VisionBoard.scr", true);
+                string exePath = asm.Location;
+                string scrPath = exePath.Replace(".exe", ".scr");
+                File.Copy(exePath, scrPath, true);
+                System.Diagnostics.Process.Start(scrPath);
             }
             catch (Exception ex)
             {

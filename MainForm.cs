@@ -308,15 +308,11 @@ namespace DevinDow.VisionBoard
 
             try
             {
-                /*RegistryKey key = Registry.CurrentUser.CreateSubKey("Software\\VisionBoard");
-                key.SetValue("screensaverVbdFile", VisionBoard.Filename);
-                key.Close();*/
-                vbdFile.Write(Environment.SystemDirectory + "\\VisionBoardScreenSaver.vbd", VisionBoard);
                 Screensaver.Install();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message + "\n\nTo set up screensaver manually:\n 1) Copy EXE to System32 directory.\n 2) Rename .EXE to .SCR\n 3) Copy your .VBD file to System32 directory.\n", "Failed to copy VisionBoard to System directory.");
+                MessageBox.Show(ex.Message + "\n\nTo set up screensaver manually:\n Copy VisionBoard.exe to VisionBoard.scr then r-click.", "Failed to install VisionBoard screen saver.");
             }
 
             Cursor = Cursors.Default;
