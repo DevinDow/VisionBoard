@@ -354,6 +354,11 @@ namespace DevinDow.VisionBoard
                 "Instructions", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        private void miAssocVBD_Click(object sender, EventArgs e)
+        {
+            associateVbdExtension();
+        }
+
 
         // Methods
         [DllImport("shell32.dll")]
