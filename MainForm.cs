@@ -216,6 +216,10 @@ namespace DevinDow.VisionBoard
                 item.X = clickedPoint.X;
                 item.Y = clickedPoint.Y;
                 item.Filename = VisionBoard.nextIndex++.ToString();
+                if (item.Size.Width > Screen.PrimaryScreen.Bounds.Width || item.Size.Height > Screen.PrimaryScreen.Bounds.Height)
+                {
+                    item.Scale = Math.Min(1f * Screen.PrimaryScreen.Bounds.Width / item.Bounds.Width, 1f * Screen.PrimaryScreen.Bounds.Height / item.Bounds.Height);
+                }
                 VisionBoard.Items.Add(item);
                 Invalidate();
                 VisionBoard.IsDirty = true;

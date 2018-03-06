@@ -1,6 +1,9 @@
 ﻿TODO
 ----
 
+Instructions to setup Screen Saver
+- My Documents\VisionBoardScreenSaver.vbd
+
 BUG: Image.FromFile() locks file, therefore save fails on locked filenames
 
 - Hot Keys
