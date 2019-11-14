@@ -16,7 +16,7 @@ namespace DevinDow.VisionBoard
     public partial class MainForm : Form
     {
         // Public Fields
-        public VisionBoard VisionBoard;
+        public static VisionBoard VisionBoard;
 
         
         // Private Fields

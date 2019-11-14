@@ -15,10 +15,16 @@ namespace DevinDow.VisionBoard
         
             try
             {
+                // create .SCR from .EXE
                 string exePath = asm.Location;
                 string scrPath = exePath.Replace(".exe", ".scr");
                 File.Copy(exePath, scrPath, true);
-                System.Diagnostics.Process.Start(scrPath); // Launch default action on .scr, which is either "Install" or "Test".
+
+                // write current VisionBoard to ScreensaverVisionBoardPath
+                vbdFile.Write(ScreensaverForm.ScreensaverVisionBoardPath, MainForm.VisionBoard);
+
+                // launch default action on .scr, which is either "Install" or "Test"
+                System.Diagnostics.Process.Start(scrPath);
             }
             catch (Exception ex)
             {

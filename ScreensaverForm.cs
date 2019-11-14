@@ -16,6 +16,17 @@ namespace DevinDow.VisionBoard
         public VisionBoard VisionBoard;
 
 
+        // Public Properties
+        public static string ScreensaverVisionBoardPath
+        {
+            get
+            {
+                // Screensaver Visionboard stored at "MyDocuments\VisionBoard.vbd"
+                return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "VisionBoard.vbd");
+            }
+        }
+
+
         // Private Fields
         private Point mousePoint;
 
@@ -34,7 +45,7 @@ namespace DevinDow.VisionBoard
         {
             if (VisionBoard == null)
             {
-                string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "VisionBoard.vbd");
+                string path = ScreensaverVisionBoardPath;
                 VisionBoard = vbdFile.Read(path);
                 Invalidate();
 
