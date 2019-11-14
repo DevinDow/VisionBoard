@@ -120,6 +120,7 @@
     <Compile Include="vbdFile.cs" />
     <Compile Include="VisionBoard.cs" />
     <Compile Include="Wallpaper.cs" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Eye.ico" />

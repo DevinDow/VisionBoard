@@ -3,8 +3,6 @@
 
 BUG: Image.FromFile() locks file, therefore save fails on locked filenames
 
-- Screensaver hard-coded to "\My Documents", currentVisionboard not used
-
 - Hot Keys
 
 - Reorder (move up/down)
