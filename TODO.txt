@@ -3,15 +3,6 @@
 
 BUG: Image.FromFile() locks file, therefore save fails on locked filenames
 
-- Hot Keys
-
-- Caption
+- Captions
+	- add Captions
 	- rename files?
-
-- Screen Saver
-	Options - choosing pause duration
-
-- Registration
-	Web site
-	PayPal
-	Check for updates
