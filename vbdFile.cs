@@ -125,8 +125,8 @@ namespace DevinDow.VisionBoard
                                 try
                                 {
                                     int index = int.Parse(item.Filename);
-                                    if (index >= visionBoard.nextIndex)
-                                        visionBoard.nextIndex = index + 1;
+                                    if (index >= visionBoard.NextIndex)
+                                        visionBoard.NextIndex = index + 1;
                                 }
                                 catch (Exception) { }
 

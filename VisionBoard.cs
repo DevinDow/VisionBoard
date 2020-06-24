@@ -11,7 +11,7 @@ namespace DevinDow.VisionBoard
     {
         // Public Fields
         public string Filename;
-        public int nextIndex = 1;
+        public int NextIndex = 1;
         public bool IsDirty = false;
         public ArrayList Items = new ArrayList();
         public IEnumerator ItemEnumerator;
