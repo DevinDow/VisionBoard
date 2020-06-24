@@ -15,10 +15,6 @@ namespace DevinDow.VisionBoard
 {
     public partial class MainForm : Form
     {
-        // Public Fields
-        public static VisionBoard VisionBoard;
-
-        
         // Private Fields
         private Point clickedPoint;
         private ImageItem selectedItem;
@@ -40,7 +36,7 @@ namespace DevinDow.VisionBoard
             this.SetStyle(ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer, true);
 
             if (path.Length > 0)
-                VisionBoard = vbdFile.Read(path);
+                VisionBoard.Current = vbdFile.Read(path);
         }
         #endregion
 
@@ -48,15 +44,15 @@ namespace DevinDow.VisionBoard
         #region Events
         private void MainForm_Load(object sender, EventArgs e)
         {
-            if (VisionBoard == null)
+            if (VisionBoard.Current == null)
             {
-                VisionBoard = vbdFile.Read(Properties.Settings.Default.CurrentVisionBoardFile);
+                VisionBoard.Current = vbdFile.Read(Properties.Settings.Default.CurrentVisionBoardFile);
             }
         }
 
         private void MainForm_Paint(object sender, PaintEventArgs e)
         {
-            if (VisionBoard == null)
+            if (VisionBoard.Current == null)
                 return;
 
             // Set up Bitmap
@@ -66,17 +62,17 @@ namespace DevinDow.VisionBoard
             bitmapG.TranslateTransform(Width / 2, Height / 2);
 
             // Reordering
-            if (VisionBoard.Reordering)
+            if (VisionBoard.Current.Reordering)
             {
-                VisionBoard.OrderIndex = 0;
+                VisionBoard.Current.OrderIndex = 0;
 
-                foreach (ImageItem item in VisionBoard.Items)
+                foreach (ImageItem item in VisionBoard.Current.Items)
                     item.Draw(bitmapG);
             }
             else
             {
                 // Draw Non-Selected to Bitmap
-                foreach (ImageItem item in VisionBoard.Items)
+                foreach (ImageItem item in VisionBoard.Current.Items)
                     if (item != selectedItem)
                         item.Draw(bitmapG);
 
@@ -99,16 +95,16 @@ namespace DevinDow.VisionBoard
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (VisionBoard.IsDirty)
+            if (VisionBoard.Current.IsDirty)
                 if (MessageBox.Show("Close without saving your VisionBoard?", "Closing", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.No)
                     e.Cancel = true;
         }
 
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
-            if (VisionBoard.Reordering && e.KeyCode == Keys.Escape)
+            if (VisionBoard.Current.Reordering && e.KeyCode == Keys.Escape)
             {
-                VisionBoard.Reordering = false;
+                VisionBoard.Current.Reordering = false;
                 Invalidate();
             }
 
@@ -162,7 +158,7 @@ namespace DevinDow.VisionBoard
                     {
                         if (MessageBox.Show("Delete this image?", "Deleting", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
                         {
-                            VisionBoard.Items.Remove(selectedItem);
+                            VisionBoard.Current.Items.Remove(selectedItem);
                             selectedItem = null;
                             Invalidate();
                         }
@@ -173,11 +169,11 @@ namespace DevinDow.VisionBoard
                 // Selecting
                 selectedItem = null;
                 int selectedIndex = -1;
-                for (int i=0; i<VisionBoard.Items.Count; i++) // foreach (ImageItem item in VisionBoard.Items)
+                for (int i=0; i<VisionBoard.Current.Items.Count; i++) // foreach (ImageItem item in VisionBoard.Items)
                 {
-                    ImageItem item = (ImageItem)VisionBoard.Items[i];
+                    ImageItem item = (ImageItem)VisionBoard.Current.Items[i];
 
-                    if (VisionBoard.Reordering && VisionBoard.ReorderCurrentIndex > i)
+                    if (VisionBoard.Current.Reordering && VisionBoard.Current.ReorderCurrentIndex > i)
                         continue;
 
                     if (item.HitTest(clickedPoint.X, clickedPoint.Y))
@@ -191,20 +187,20 @@ namespace DevinDow.VisionBoard
                     }
                 }
 
-                if (VisionBoard.Reordering && selectedIndex >= 0)
+                if (VisionBoard.Current.Reordering && selectedIndex >= 0)
                 {
                     // change order
-                    if (selectedIndex != VisionBoard.ReorderCurrentIndex)
+                    if (selectedIndex != VisionBoard.Current.ReorderCurrentIndex)
                     {
-                        VisionBoard.Items.RemoveAt(selectedIndex);
-                        VisionBoard.Items.Insert(VisionBoard.ReorderCurrentIndex, selectedItem);
-                        VisionBoard.IsDirty = true;
+                        VisionBoard.Current.Items.RemoveAt(selectedIndex);
+                        VisionBoard.Current.Items.Insert(VisionBoard.Current.ReorderCurrentIndex, selectedItem);
+                        VisionBoard.Current.IsDirty = true;
                     }
 
                     // increment ReorderCurrentIndex
-                    VisionBoard.ReorderCurrentIndex++;
-                    if (VisionBoard.ReorderCurrentIndex >= VisionBoard.Items.Count)
-                        VisionBoard.Reordering = false;
+                    VisionBoard.Current.ReorderCurrentIndex++;
+                    if (VisionBoard.Current.ReorderCurrentIndex >= VisionBoard.Current.Items.Count)
+                        VisionBoard.Current.Reordering = false;
                     
                     selectedItem = null;
                 }
@@ -223,14 +219,14 @@ namespace DevinDow.VisionBoard
                 selectedItem.X = x;
                 selectedItem.Y = y;
                 Invalidate();
-                VisionBoard.IsDirty = true;
+                VisionBoard.Current.IsDirty = true;
             }
 
             else if (rotating)
             {
                 selectedItem.RotationRadians = (float)Math.Atan2(y - selectedItem.Y, x - selectedItem.X);
                 Invalidate();
-                VisionBoard.IsDirty = true;
+                VisionBoard.Current.IsDirty = true;
             }
 
             else if (scaling)
@@ -238,7 +234,7 @@ namespace DevinDow.VisionBoard
                 float newHalfWidth = (float)Math.Sqrt(Math.Pow(x - selectedItem.X, 2) + Math.Pow(y - selectedItem.Y, 2));
                 selectedItem.Scale = newHalfWidth / (selectedItem.Image.Width / 2);
                 Invalidate();
-                VisionBoard.IsDirty = true;
+                VisionBoard.Current.IsDirty = true;
             }
         }
 
@@ -264,14 +260,14 @@ namespace DevinDow.VisionBoard
                 item.Image = bitmap;
                 item.X = clickedPoint.X;
                 item.Y = clickedPoint.Y;
-                item.Filename = VisionBoard.NextIndex++.ToString();
+                item.Filename = VisionBoard.Current.NextIndex++.ToString();
                 if (item.Size.Width > Screen.PrimaryScreen.Bounds.Width || item.Size.Height > Screen.PrimaryScreen.Bounds.Height)
                 {
                     item.Scale = Math.Min(1f * Screen.PrimaryScreen.Bounds.Width / item.Bounds.Width, 1f * Screen.PrimaryScreen.Bounds.Height / item.Bounds.Height);
                 }
-                VisionBoard.Items.Add(item);
+                VisionBoard.Current.Items.Add(item);
                 Invalidate();
-                VisionBoard.IsDirty = true;
+                VisionBoard.Current.IsDirty = true;
             }
             else if (Clipboard.ContainsFileDropList())
             {
@@ -294,7 +290,7 @@ namespace DevinDow.VisionBoard
         // File
         private void miNew_Click(object sender, EventArgs e)
         {
-            VisionBoard = new VisionBoard();
+            VisionBoard.Current = new VisionBoard();
             Invalidate();
             Properties.Settings.Default.CurrentVisionBoardFile = string.Empty;
             Properties.Settings.Default.Save();
@@ -302,15 +298,15 @@ namespace DevinDow.VisionBoard
 
         private void miSave_Click(object sender, EventArgs e)
         {
-            if (VisionBoard.Filename != null && VisionBoard.Filename.Length > 0)
-                vbdFile.Write(VisionBoard.Filename, VisionBoard);
+            if (VisionBoard.Current.Filename != null && VisionBoard.Current.Filename.Length > 0)
+                vbdFile.Write(VisionBoard.Current.Filename, VisionBoard.Current);
             else
-                vbdFile.Write(VisionBoard);
+                vbdFile.Write(VisionBoard.Current);
         }
 
         private void miSaveAs_Click(object sender, EventArgs e)
         {
-            vbdFile.Write(VisionBoard);
+            vbdFile.Write(VisionBoard.Current);
         }
 
         private void miLoad_Click(object sender, EventArgs e)
@@ -318,7 +314,7 @@ namespace DevinDow.VisionBoard
 			VisionBoard newVisionBoard = vbdFile.Read();
 			if (newVisionBoard != null)
 			{
-				VisionBoard = newVisionBoard;
+				VisionBoard.Current = newVisionBoard;
 				Invalidate();
 			}
         }
@@ -328,7 +324,6 @@ namespace DevinDow.VisionBoard
         private void miPlay_Click(object sender, EventArgs e)
         {
             ScreensaverForm form = new ScreensaverForm();
-            form.VisionBoard = VisionBoard;
             form.Show();
         }
 
@@ -351,8 +346,8 @@ namespace DevinDow.VisionBoard
         private void miReorder_Click(object sender, EventArgs e)
         {
             selectedItem = null;
-            VisionBoard.Reordering = !VisionBoard.Reordering;
-            VisionBoard.ReorderCurrentIndex = 0;
+            VisionBoard.Current.Reordering = !VisionBoard.Current.Reordering;
+            VisionBoard.Current.ReorderCurrentIndex = 0;
             Invalidate();
         }
 
@@ -360,7 +355,7 @@ namespace DevinDow.VisionBoard
         // Media
         private void miPrint_Click(object sender, EventArgs e)
         {
-            Print print = new Print(VisionBoard);
+            Printer.Print();
         }
 
         private void miSaveVisionBoardImage_Click(object sender, EventArgs e)
@@ -372,7 +367,7 @@ namespace DevinDow.VisionBoard
             if (sfd.ShowDialog() == DialogResult.OK)
             {
                 Rectangle bounds = Screen.PrimaryScreen.Bounds;
-                Bitmap bitmap = VisionBoard.GetBitmap(bounds.Width, bounds.Height);
+                Bitmap bitmap = VisionBoard.Current.GetBitmap(bounds.Width, bounds.Height);
                 bitmap.Save(sfd.FileName, ImageFormat.Jpeg);
             }
         }
@@ -382,7 +377,7 @@ namespace DevinDow.VisionBoard
             Cursor = Cursors.WaitCursor;
 
             Rectangle bounds = Screen.PrimaryScreen.Bounds;
-            Bitmap bitmap = VisionBoard.GetBitmap(bounds.Width, bounds.Height);
+            Bitmap bitmap = VisionBoard.Current.GetBitmap(bounds.Width, bounds.Height);
             Wallpaper.SetWallpaper(bitmap);
 
             Cursor = Cursors.Default;

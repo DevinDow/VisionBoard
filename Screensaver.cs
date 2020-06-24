@@ -21,7 +21,7 @@ namespace DevinDow.VisionBoard
                 File.Copy(exePath, scrPath, true);
 
                 // write current VisionBoard to ScreensaverVisionBoardPath
-                vbdFile.Write(ScreensaverForm.ScreensaverVisionBoardPath, MainForm.VisionBoard);
+                vbdFile.Write(ScreensaverForm.ScreensaverVisionBoardPath, VisionBoard.Current);
 
                 // launch default action on .scr, which is either "Install" or "Test"
                 System.Diagnostics.Process.Start(scrPath);

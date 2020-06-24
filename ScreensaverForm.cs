@@ -12,10 +12,6 @@ namespace DevinDow.VisionBoard
 {
     public partial class ScreensaverForm : Form
     {
-        // Public Fields
-        public VisionBoard VisionBoard;
-
-
         // Public Properties
         public static string ScreensaverVisionBoardPath
         {
@@ -43,48 +39,48 @@ namespace DevinDow.VisionBoard
         // Private Events
         private void ScreensaverForm_Load(object sender, EventArgs e)
         {
-            if (VisionBoard == null)
+            if (VisionBoard.Current == null)
             {
                 string path = ScreensaverVisionBoardPath;
-                VisionBoard = MainForm.VisionBoard = vbdFile.Read(path);
+                VisionBoard.Current = vbdFile.Read(path);
                 Invalidate();
 
-                if (VisionBoard == null)
+                if (VisionBoard.Current == null)
                 {
                     MessageBox.Show(".VBD file could not be loaded", path);
                     return;
                 }
             }
 
-            if (VisionBoard != null)
+            if (VisionBoard.Current != null)
             {
-                VisionBoard.ItemEnumerator = VisionBoard.Items.GetEnumerator();
-                VisionBoard.ItemEnumerator.MoveNext();
-                VisionBoard.Step = 0;
+                VisionBoard.Current.ItemEnumerator = VisionBoard.Current.Items.GetEnumerator();
+                VisionBoard.Current.ItemEnumerator.MoveNext();
+                VisionBoard.Current.Step = 0;
             }
         }
 
         private void ScreensaverForm_Paint(object sender, PaintEventArgs e)
         {
-            if (VisionBoard != null)
-                VisionBoard.Play(e.Graphics, Width, Height);
+            if (VisionBoard.Current != null)
+                VisionBoard.Current.Play(e.Graphics, Width, Height);
         }
 
         private void timer_Tick(object sender, EventArgs e)
         {
-            if (VisionBoard == null)
+            if (VisionBoard.Current == null)
                 return;
 
-            VisionBoard.Step++;
+            VisionBoard.Current.Step++;
 
-            if (VisionBoard.Step >= VisionBoard.MaxStep)
+            if (VisionBoard.Current.Step >= VisionBoard.MaxStep)
             {
-                if (!VisionBoard.ItemEnumerator.MoveNext())
+                if (!VisionBoard.Current.ItemEnumerator.MoveNext())
                 {
-                    VisionBoard.ItemEnumerator.Reset();
-                    VisionBoard.ItemEnumerator.MoveNext();
+                    VisionBoard.Current.ItemEnumerator.Reset();
+                    VisionBoard.Current.ItemEnumerator.MoveNext();
                 }
-                VisionBoard.Step = 0;
+                VisionBoard.Current.Step = 0;
             }
 
             Invalidate();

@@ -72,11 +72,11 @@ namespace DevinDow.VisionBoard
 
             // Reordering
             float handleSize = 1.0f * HandleSize / Scale;
-            if (MainForm.VisionBoard.Reordering)
+            if (VisionBoard.Current.Reordering)
             {
                 float numSize = handleSize * 4;
                 Brush brush = Brushes.Red;
-                if (MainForm.VisionBoard.OrderIndex < MainForm.VisionBoard.ReorderCurrentIndex)
+                if (VisionBoard.Current.OrderIndex < VisionBoard.Current.ReorderCurrentIndex)
                 {
                     brush = Brushes.Green;
                 }
@@ -86,8 +86,8 @@ namespace DevinDow.VisionBoard
                 StringFormat format = new StringFormat();
                 format.Alignment = StringAlignment.Center;
                 format.LineAlignment = StringAlignment.Center;
-                g.DrawString((MainForm.VisionBoard.OrderIndex+1).ToString(), font, Brushes.Black, 0, 0, format);
-                MainForm.VisionBoard.OrderIndex++;
+                g.DrawString((VisionBoard.Current.OrderIndex+1).ToString(), font, Brushes.Black, 0, 0, format);
+                VisionBoard.Current.OrderIndex++;
             }
 
             // Selected

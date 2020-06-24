@@ -9,6 +9,10 @@ namespace DevinDow.VisionBoard
 {
     public class VisionBoard
     {
+        // Public Static Fields
+        public static VisionBoard Current;
+
+
         // Public Fields
         public string Filename;
         public int NextIndex = 1;

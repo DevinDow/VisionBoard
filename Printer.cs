@@ -7,22 +7,15 @@ using System.Drawing.Printing;
 
 namespace DevinDow.VisionBoard
 {
-    class Print
+    class Printer
     {
-        // Private Fields
-        private VisionBoard visionBoard;
-
-
-        // Constructor
-        public Print(VisionBoard visionBoard)
+        public static void Print()
         {
-            if (visionBoard == null)
+            if (VisionBoard.Current == null)
                 return;
 
-            this.visionBoard = visionBoard;
-
             PrintDocument doc = new PrintDocument();
-            doc.DocumentName = visionBoard.Filename;
+            doc.DocumentName = VisionBoard.Current.Filename;
             doc.DefaultPageSettings.Landscape = true;
             doc.PrintPage += new PrintPageEventHandler(doc_PrintPage);
 
@@ -31,15 +24,15 @@ namespace DevinDow.VisionBoard
             dialog.ShowDialog();
         }
 
-        void doc_PrintPage(object sender, PrintPageEventArgs e)
+        private static void doc_PrintPage(object sender, PrintPageEventArgs e)
         {
             e.Graphics.TranslateTransform(e.PageBounds.Width / 2, e.PageBounds.Height / 2);
 
-            Box bounds = visionBoard.Bounds;
+            Box bounds = VisionBoard.Current.Bounds;
             float scale = Math.Min(1.0f * e.MarginBounds.Width / bounds.Width, 1.0f * e.MarginBounds.Height / bounds.Height);
             e.Graphics.ScaleTransform(scale, scale);
-            
-            visionBoard.Draw(e.Graphics);
+
+            VisionBoard.Current.Draw(e.Graphics);
         }
     }
 }
