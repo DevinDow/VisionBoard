@@ -27,7 +27,7 @@ namespace DevinDow.VisionBoard
         private bool scaling = false;
 
 
-        // Constructors
+        #region Constructors
         public MainForm()
         {
             InitializeComponent();
@@ -42,9 +42,10 @@ namespace DevinDow.VisionBoard
             if (path.Length > 0)
                 VisionBoard = vbdFile.Read(path);
         }
+        #endregion
 
 
-        // Events
+        #region Events
         private void MainForm_Load(object sender, EventArgs e)
         {
             if (VisionBoard == null)
@@ -91,9 +92,10 @@ namespace DevinDow.VisionBoard
                 if (MessageBox.Show("Close without saving your VisionBoard?", "Closing", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.No)
                     e.Cancel = true;
         }
+        #endregion
 
 
-        // Mouse
+        #region Mouse
         private void MainForm_MouseDown(object sender, MouseEventArgs e)
         {
             clickedPoint = new Point(e.Location.X - Width / 2, e.Location.Y - Height / 2);
@@ -196,9 +198,12 @@ namespace DevinDow.VisionBoard
             rotating = false;
             scaling = false;
         }
+        #endregion
 
 
-        // Menus
+        #region Menus
+
+        // Context Menu
         private void miPaste_Click(object sender, EventArgs e)
         {
             if (Clipboard.ContainsImage())
@@ -236,6 +241,7 @@ namespace DevinDow.VisionBoard
         }
 
         
+        // File
         private void miNew_Click(object sender, EventArgs e)
         {
             VisionBoard = new VisionBoard();
@@ -267,6 +273,42 @@ namespace DevinDow.VisionBoard
 			}
         }
 
+
+        // View
+        private void miPlay_Click(object sender, EventArgs e)
+        {
+            ScreensaverForm form = new ScreensaverForm();
+            form.VisionBoard = VisionBoard;
+            form.Show();
+        }
+
+        private void miFullScreen_Click(object sender, EventArgs e)
+        {
+            WindowState = FormWindowState.Normal;
+            if (FormBorderStyle == FormBorderStyle.Sizable)
+            {
+                FormBorderStyle = FormBorderStyle.None;
+                WindowState = FormWindowState.Maximized;
+            }
+            else
+            {
+                FormBorderStyle = FormBorderStyle.Sizable;
+                WindowState = FormWindowState.Maximized;
+            }
+            Invalidate();
+        }
+
+        private void miReorder_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+        // Media
+        private void miPrint_Click(object sender, EventArgs e)
+        {
+            Print print = new Print(VisionBoard);
+        }
 
         private void miSaveVisionBoardImage_Click(object sender, EventArgs e)
         {
@@ -309,40 +351,8 @@ namespace DevinDow.VisionBoard
             Cursor = Cursors.Default;
         }
 
-        private void miPlay_Click(object sender, EventArgs e)
-        {
-            ScreensaverForm form = new ScreensaverForm();
-            form.VisionBoard = VisionBoard;
-            form.Show();
-        }
 
-        private void miPrint_Click(object sender, EventArgs e)
-        {
-            Print print = new Print(VisionBoard);
-        }
-
-        private void miFullScreen_Click(object sender, EventArgs e)
-        {
-            WindowState = FormWindowState.Normal;
-            if (FormBorderStyle == FormBorderStyle.Sizable)
-            {
-                FormBorderStyle = FormBorderStyle.None;
-                WindowState = FormWindowState.Maximized;
-            }
-            else
-            {
-                FormBorderStyle = FormBorderStyle.Sizable;
-                WindowState = FormWindowState.Maximized;
-            }
-            Invalidate();
-        }
-
-        private void miAbout_Click(object sender, EventArgs e)
-        {
-            AboutForm about = new AboutForm();
-            about.ShowDialog();
-        }
-
+        // Help
         private void miInstructions_Click(object sender, EventArgs e)
         {
             MessageBox.Show("VisionBoard lets you build a Vision Board on your computer\n   using images from the internet or your computer\n   instead of having to cut out magazine clippings\n\n" +
@@ -359,8 +369,15 @@ namespace DevinDow.VisionBoard
             associateVbdExtension();
         }
 
+        private void miAbout_Click(object sender, EventArgs e)
+        {
+            AboutForm about = new AboutForm();
+            about.ShowDialog();
+        }
+        #endregion
 
-        // Methods
+
+        #region Methods
         [DllImport("shell32.dll")]
         static extern void SHChangeNotify(long wEventId, uint uFlags, IntPtr dwItem1, IntPtr dwItem2);
         private void associateVbdExtension()
@@ -392,5 +409,6 @@ namespace DevinDow.VisionBoard
                 MessageBox.Show(ex.ToString());
             }
         }
+        #endregion
     }
 }
