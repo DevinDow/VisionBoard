@@ -208,30 +208,30 @@
             // miInstructions
             // 
             this.miInstructions.Name = "miInstructions";
-            this.miInstructions.Size = new System.Drawing.Size(176, 22);
+            this.miInstructions.Size = new System.Drawing.Size(180, 22);
             this.miInstructions.Text = "&Instructions";
             this.miInstructions.Click += new System.EventHandler(this.miInstructions_Click);
             // 
             // miAssocVDB
             // 
             this.miAssocVDB.Name = "miAssocVDB";
-            this.miAssocVDB.Size = new System.Drawing.Size(176, 22);
+            this.miAssocVDB.Size = new System.Drawing.Size(180, 22);
             this.miAssocVDB.Text = "Associate .&vbd Files";
             this.miAssocVDB.Click += new System.EventHandler(this.miAssocVBD_Click);
             // 
             // miAbout
             // 
             this.miAbout.Name = "miAbout";
-            this.miAbout.Size = new System.Drawing.Size(176, 22);
+            this.miAbout.Size = new System.Drawing.Size(180, 22);
             this.miAbout.Text = "&About VisionBoard";
             this.miAbout.Click += new System.EventHandler(this.miAbout_Click);
             // 
             // miUpdates
             // 
-            this.miUpdates.Enabled = false;
             this.miUpdates.Name = "miUpdates";
-            this.miUpdates.Size = new System.Drawing.Size(176, 22);
+            this.miUpdates.Size = new System.Drawing.Size(180, 22);
             this.miUpdates.Text = "Check for &Updates";
+            this.miUpdates.Click += new System.EventHandler(this.miUpdates_Click);
             // 
             // MainForm
             // 

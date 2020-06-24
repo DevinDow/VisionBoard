@@ -427,6 +427,11 @@ namespace DevinDow.VisionBoard
             AboutForm about = new AboutForm();
             about.ShowDialog();
         }
+
+        private void miUpdates_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/DevinDow/VisionBoard/releases");
+        }
         #endregion
 
 
