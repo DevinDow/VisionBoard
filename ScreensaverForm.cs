@@ -46,7 +46,7 @@ namespace DevinDow.VisionBoard
             if (VisionBoard == null)
             {
                 string path = ScreensaverVisionBoardPath;
-                VisionBoard = vbdFile.Read(path);
+                VisionBoard = MainForm.VisionBoard = vbdFile.Read(path);
                 Invalidate();
 
                 if (VisionBoard == null)
