@@ -20,7 +20,11 @@ namespace DevinDow.VisionBoard
         public const int PauseSteps = 10;
         public const int HalfwayStep = MaxStep / 2 - PauseSteps / 2;
 
-        
+        public bool Reordering = false;
+        public int OrderIndex;
+        public int ReorderCurrentIndex;
+
+
         // Public Properties
         public Box Bounds
         {

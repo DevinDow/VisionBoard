@@ -65,14 +65,25 @@ namespace DevinDow.VisionBoard
             bitmapG.SetClip(new Rectangle(0, 0, Width, Height));
             bitmapG.TranslateTransform(Width / 2, Height / 2);
 
-            // Draw Non-Selected to Bitmap
-            foreach (ImageItem item in VisionBoard.Items)
-                if (item != selectedItem)
-                    item.Draw(bitmapG);
+            // Reordering
+            if (VisionBoard.Reordering)
+            {
+                VisionBoard.OrderIndex = 0;
 
-            // Draw Selected to Bitmap
-            if (selectedItem != null)
-                selectedItem.Draw(bitmapG, true);
+                foreach (ImageItem item in VisionBoard.Items)
+                    item.Draw(bitmapG);
+            }
+            else
+            {
+                // Draw Non-Selected to Bitmap
+                foreach (ImageItem item in VisionBoard.Items)
+                    if (item != selectedItem)
+                        item.Draw(bitmapG);
+
+                // Draw Selected to Bitmap
+                if (selectedItem != null)
+                    selectedItem.Draw(bitmapG, true);
+            }
 
             // Paint Bitmap
             e.Graphics.DrawImage(bitmap, 0, 0);
@@ -91,6 +102,16 @@ namespace DevinDow.VisionBoard
             if (VisionBoard.IsDirty)
                 if (MessageBox.Show("Close without saving your VisionBoard?", "Closing", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.No)
                     e.Cancel = true;
+        }
+
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (VisionBoard.Reordering && e.KeyCode == Keys.Escape)
+            {
+                VisionBoard.Reordering = false;
+                Invalidate();
+            }
+
         }
         #endregion
 
@@ -151,14 +172,43 @@ namespace DevinDow.VisionBoard
 
                 // Selecting
                 selectedItem = null;
-                foreach (ImageItem item in VisionBoard.Items)
+                int selectedIndex = -1;
+                for (int i=0; i<VisionBoard.Items.Count; i++) // foreach (ImageItem item in VisionBoard.Items)
+                {
+                    ImageItem item = (ImageItem)VisionBoard.Items[i];
+
+                    if (VisionBoard.Reordering && VisionBoard.ReorderCurrentIndex > i)
+                        continue;
+
                     if (item.HitTest(clickedPoint.X, clickedPoint.Y))
                     {
-                        if (selectedItem == null)
+                        if (selectedItem == null ||  // found one
+                                item.Distance(clickedPoint.X, clickedPoint.Y) < selectedItem.Distance(clickedPoint.X, clickedPoint.Y)) // found another, so select closest to center
+                        {
                             selectedItem = item;
-                        else if (item.Distance(clickedPoint.X, clickedPoint.Y) < selectedItem.Distance(clickedPoint.X, clickedPoint.Y))
-                            selectedItem = item;
+                            selectedIndex = i;
+                        }
                     }
+                }
+
+                if (VisionBoard.Reordering && selectedIndex >= 0)
+                {
+                    // change order
+                    if (selectedIndex != VisionBoard.ReorderCurrentIndex)
+                    {
+                        VisionBoard.Items.RemoveAt(selectedIndex);
+                        VisionBoard.Items.Insert(VisionBoard.ReorderCurrentIndex, selectedItem);
+                        VisionBoard.IsDirty = true;
+                    }
+
+                    // increment ReorderCurrentIndex
+                    VisionBoard.ReorderCurrentIndex++;
+                    if (VisionBoard.ReorderCurrentIndex >= VisionBoard.Items.Count)
+                        VisionBoard.Reordering = false;
+                    
+                    selectedItem = null;
+                }
+
                 Invalidate();
             }
         }
@@ -300,7 +350,10 @@ namespace DevinDow.VisionBoard
 
         private void miReorder_Click(object sender, EventArgs e)
         {
-
+            selectedItem = null;
+            VisionBoard.Reordering = !VisionBoard.Reordering;
+            VisionBoard.ReorderCurrentIndex = 0;
+            Invalidate();
         }
 
 

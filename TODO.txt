@@ -1,19 +1,12 @@
 ﻿TODO
 ----
 
-- Reorder (move up/down)
-	- "Reorder" menu, turns on Mode, currentIndex = 0
-	- MainForm_MouseDown() Selecting
-		- starts searching from currentIndex so it will only find Items that have not been ordered yet
-		- inserts selected Item to currentIndex in VisionBoard.Items
-	- ImageItem.Draw(Index) draws Index Number instead of handles
-		- different color for those already ordered
-
 BUG: Image.FromFile() locks file, therefore save fails on locked filenames
 
 - Hot Keys
 
 - Caption
+	- rename files?
 
 - Screen Saver
 	Options - choosing pause duration

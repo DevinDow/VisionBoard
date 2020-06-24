@@ -65,7 +65,7 @@ namespace DevinDow.VisionBoard
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.DefaultExt = ".vbd";
-            ofd.Title = "Save Vision Board file";
+            ofd.Title = "Load Vision Board file";
             ofd.Filter = "Vision Board files (*.vbd)|*.vbd|All Files (*.*)|*.*";
             ofd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 			try 

@@ -41,17 +41,17 @@
             this.miView = new System.Windows.Forms.ToolStripMenuItem();
             this.miPlay = new System.Windows.Forms.ToolStripMenuItem();
             this.miFullScreen = new System.Windows.Forms.ToolStripMenuItem();
-            this.miHelp = new System.Windows.Forms.ToolStripMenuItem();
-            this.miInstructions = new System.Windows.Forms.ToolStripMenuItem();
-            this.miAssocVDB = new System.Windows.Forms.ToolStripMenuItem();
-            this.miAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.miUpdates = new System.Windows.Forms.ToolStripMenuItem();
+            this.miReorder = new System.Windows.Forms.ToolStripMenuItem();
             this.miMedia = new System.Windows.Forms.ToolStripMenuItem();
             this.miPrint = new System.Windows.Forms.ToolStripMenuItem();
             this.miSaveVisionBoardImage = new System.Windows.Forms.ToolStripMenuItem();
             this.miWallpaper = new System.Windows.Forms.ToolStripMenuItem();
             this.miScreensaver = new System.Windows.Forms.ToolStripMenuItem();
-            this.miReorder = new System.Windows.Forms.ToolStripMenuItem();
+            this.miHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.miInstructions = new System.Windows.Forms.ToolStripMenuItem();
+            this.miAssocVDB = new System.Windows.Forms.ToolStripMenuItem();
+            this.miAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.miUpdates = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -97,28 +97,28 @@
             // miNew
             // 
             this.miNew.Name = "miNew";
-            this.miNew.Size = new System.Drawing.Size(180, 22);
+            this.miNew.Size = new System.Drawing.Size(114, 22);
             this.miNew.Text = "&New";
             this.miNew.Click += new System.EventHandler(this.miNew_Click);
             // 
             // miLoad
             // 
             this.miLoad.Name = "miLoad";
-            this.miLoad.Size = new System.Drawing.Size(180, 22);
+            this.miLoad.Size = new System.Drawing.Size(114, 22);
             this.miLoad.Text = "&Load";
             this.miLoad.Click += new System.EventHandler(this.miLoad_Click);
             // 
             // miSave
             // 
             this.miSave.Name = "miSave";
-            this.miSave.Size = new System.Drawing.Size(180, 22);
+            this.miSave.Size = new System.Drawing.Size(114, 22);
             this.miSave.Text = "&Save";
             this.miSave.Click += new System.EventHandler(this.miSave_Click);
             // 
             // miSaveAs
             // 
             this.miSaveAs.Name = "miSaveAs";
-            this.miSaveAs.Size = new System.Drawing.Size(180, 22);
+            this.miSaveAs.Size = new System.Drawing.Size(114, 22);
             this.miSaveAs.Text = "Save &As";
             this.miSaveAs.Click += new System.EventHandler(this.miSaveAs_Click);
             // 
@@ -136,7 +136,7 @@
             // 
             this.miPlay.Name = "miPlay";
             this.miPlay.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.miPlay.Size = new System.Drawing.Size(180, 22);
+            this.miPlay.Size = new System.Drawing.Size(156, 22);
             this.miPlay.Text = "&Play";
             this.miPlay.Click += new System.EventHandler(this.miPlay_Click);
             // 
@@ -144,48 +144,16 @@
             // 
             this.miFullScreen.Name = "miFullScreen";
             this.miFullScreen.ShortcutKeys = System.Windows.Forms.Keys.F11;
-            this.miFullScreen.Size = new System.Drawing.Size(180, 22);
+            this.miFullScreen.Size = new System.Drawing.Size(156, 22);
             this.miFullScreen.Text = "&Full Screen";
             this.miFullScreen.Click += new System.EventHandler(this.miFullScreen_Click);
             // 
-            // miHelp
+            // miReorder
             // 
-            this.miHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.miInstructions,
-            this.miAssocVDB,
-            this.miAbout,
-            this.miUpdates});
-            this.miHelp.Name = "miHelp";
-            this.miHelp.Size = new System.Drawing.Size(44, 20);
-            this.miHelp.Text = "&Help";
-            // 
-            // miInstructions
-            // 
-            this.miInstructions.Name = "miInstructions";
-            this.miInstructions.Size = new System.Drawing.Size(180, 22);
-            this.miInstructions.Text = "&Instructions";
-            this.miInstructions.Click += new System.EventHandler(this.miInstructions_Click);
-            // 
-            // miAssocVDB
-            // 
-            this.miAssocVDB.Name = "miAssocVDB";
-            this.miAssocVDB.Size = new System.Drawing.Size(180, 22);
-            this.miAssocVDB.Text = "Associate .&vbd Files";
-            this.miAssocVDB.Click += new System.EventHandler(this.miAssocVBD_Click);
-            // 
-            // miAbout
-            // 
-            this.miAbout.Name = "miAbout";
-            this.miAbout.Size = new System.Drawing.Size(180, 22);
-            this.miAbout.Text = "&About VisionBoard";
-            this.miAbout.Click += new System.EventHandler(this.miAbout_Click);
-            // 
-            // miUpdates
-            // 
-            this.miUpdates.Enabled = false;
-            this.miUpdates.Name = "miUpdates";
-            this.miUpdates.Size = new System.Drawing.Size(180, 22);
-            this.miUpdates.Text = "Check for &Updates";
+            this.miReorder.Name = "miReorder";
+            this.miReorder.Size = new System.Drawing.Size(156, 22);
+            this.miReorder.Text = "&Reorder";
+            this.miReorder.Click += new System.EventHandler(this.miReorder_Click);
             // 
             // miMedia
             // 
@@ -226,12 +194,44 @@
             this.miScreensaver.Text = "Set as &Screensaver";
             this.miScreensaver.Click += new System.EventHandler(this.miScreensaver_Click);
             // 
-            // miReorder
+            // miHelp
             // 
-            this.miReorder.Name = "miReorder";
-            this.miReorder.Size = new System.Drawing.Size(180, 22);
-            this.miReorder.Text = "&Reorder";
-            this.miReorder.Click += new System.EventHandler(this.miReorder_Click);
+            this.miHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miInstructions,
+            this.miAssocVDB,
+            this.miAbout,
+            this.miUpdates});
+            this.miHelp.Name = "miHelp";
+            this.miHelp.Size = new System.Drawing.Size(44, 20);
+            this.miHelp.Text = "&Help";
+            // 
+            // miInstructions
+            // 
+            this.miInstructions.Name = "miInstructions";
+            this.miInstructions.Size = new System.Drawing.Size(176, 22);
+            this.miInstructions.Text = "&Instructions";
+            this.miInstructions.Click += new System.EventHandler(this.miInstructions_Click);
+            // 
+            // miAssocVDB
+            // 
+            this.miAssocVDB.Name = "miAssocVDB";
+            this.miAssocVDB.Size = new System.Drawing.Size(176, 22);
+            this.miAssocVDB.Text = "Associate .&vbd Files";
+            this.miAssocVDB.Click += new System.EventHandler(this.miAssocVBD_Click);
+            // 
+            // miAbout
+            // 
+            this.miAbout.Name = "miAbout";
+            this.miAbout.Size = new System.Drawing.Size(176, 22);
+            this.miAbout.Text = "&About VisionBoard";
+            this.miAbout.Click += new System.EventHandler(this.miAbout_Click);
+            // 
+            // miUpdates
+            // 
+            this.miUpdates.Enabled = false;
+            this.miUpdates.Name = "miUpdates";
+            this.miUpdates.Size = new System.Drawing.Size(176, 22);
+            this.miUpdates.Text = "Check for &Updates";
             // 
             // MainForm
             // 
@@ -250,6 +250,7 @@
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.MainForm_Paint);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseUp);

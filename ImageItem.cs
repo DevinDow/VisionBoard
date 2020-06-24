@@ -57,8 +57,10 @@ namespace DevinDow.VisionBoard
             g.RotateTransform(RotationDegrees + rotation);
             g.ScaleTransform(Scale * scale, Scale * scale);
 
+            // Image
             g.DrawImage(Image, -Image.Width / 2, -Image.Height / 2);
 
+            // Caption
             if (Caption != null && Caption.Length > 0)
             {
                 Font font = new Font(FontFamily.GenericSerif, 1.0f * Size.Height / 10);
@@ -68,8 +70,28 @@ namespace DevinDow.VisionBoard
                 g.DrawString(Caption, font, Brushes.Red, 0, Image.Height / 2, format);
             }
 
+            // Reordering
             float handleSize = 1.0f * HandleSize / Scale;
-            if (selected)
+            if (MainForm.VisionBoard.Reordering)
+            {
+                float numSize = handleSize * 4;
+                Brush brush = Brushes.Red;
+                if (MainForm.VisionBoard.OrderIndex < MainForm.VisionBoard.ReorderCurrentIndex)
+                {
+                    brush = Brushes.Green;
+                }
+                g.FillRectangle(brush, -numSize, -numSize, numSize * 2, numSize * 2);
+
+                Font font = new Font(FontFamily.GenericSerif, numSize);
+                StringFormat format = new StringFormat();
+                format.Alignment = StringAlignment.Center;
+                format.LineAlignment = StringAlignment.Center;
+                g.DrawString((MainForm.VisionBoard.OrderIndex+1).ToString(), font, Brushes.Black, 0, 0, format);
+                MainForm.VisionBoard.OrderIndex++;
+            }
+
+            // Selected
+            else if (selected)
             {
                 // Move handle
                 g.FillRectangle(Brushes.Orange, -handleSize, -handleSize, handleSize * 2, handleSize * 2);
