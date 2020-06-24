@@ -17,7 +17,7 @@ namespace DevinDow.VisionBoard
         public IEnumerator ItemEnumerator;
         public int Step;
         public const int MaxStep = 100;
-        public const int PauseSteps = 10;
+        public const int PauseSteps = 20;
         public const int HalfwayStep = MaxStep / 2 - PauseSteps / 2;
 
         public bool Reordering = false;
