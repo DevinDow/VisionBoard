@@ -1,6 +1,9 @@
 ﻿TODO
 ----
 
+- Draw in reverse order
+- longer pause, number hotkeys for pause duration, space hotkey for pause/unpause, arrow hotkeys for advancing
+
 BUG: Image.FromFile() locks file, therefore save fails on locked filenames
 
 - Captions
