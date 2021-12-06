@@ -65,7 +65,7 @@ namespace DevinDow.VisionBoard
             Graphics bitmapG = Graphics.FromImage(playBitmap);
             bitmapG.SetClip(new Rectangle(0, 0, width, height));
             bitmapG.TranslateTransform(width / 2, height / 2);
-            bitmapG.ScaleTransform(ScreensaverForm.Scale, ScreensaverForm.Scale);
+            bitmapG.ScaleTransform(ScreensaverForm.ScaleFactor, ScreensaverForm.ScaleFactor);
 
             bitmapG.FillRectangle(Brushes.Black, -width / 2, -height / 2, width, height);
 
@@ -110,7 +110,7 @@ namespace DevinDow.VisionBoard
             bitmapG.SetClip(new Rectangle(0, 0, width, height));
             bitmapG.DrawImage(playBitmap, 0, 0);
             bitmapG.TranslateTransform(width / 2, height / 2);
-            bitmapG.ScaleTransform(ScreensaverForm.Scale, ScreensaverForm.Scale);
+            bitmapG.ScaleTransform(ScreensaverForm.ScaleFactor, ScreensaverForm.ScaleFactor);
 
             // actualStep between original position & zoomed-in position
             int actualStep;
@@ -133,7 +133,7 @@ namespace DevinDow.VisionBoard
             if (activeItem.Y > 0)
                 y = -y;
             float rot = -activeItem.RotationDegrees / HalfwayStep * actualStep;
-            float maxScale = Math.Min(width * 0.95f / ScreensaverForm.Scale / activeItem.Size.Width, height * 0.95f / ScreensaverForm.Scale / activeItem.Size.Height);
+            float maxScale = Math.Min(width * 0.95f / ScreensaverForm.ScaleFactor / activeItem.Size.Width, height * 0.95f / ScreensaverForm.ScaleFactor / activeItem.Size.Height);
             float scale = 1 + (maxScale - 1) * actualStep / HalfwayStep;
             if (scale == 0)
                 scale = 1;
