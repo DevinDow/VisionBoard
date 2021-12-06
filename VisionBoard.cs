@@ -47,25 +47,26 @@ namespace DevinDow.VisionBoard
 
 
         // Private Fields
-        private Bitmap playBitmap;
+        private Bitmap bitmapOfStaticItems;
         private ImageItem currentActiveItem;
 
 
         // Private Properties
-        private void getPlayBitmap(int width, int height, ImageItem activeItem)
+        private void getBitmapOfStaticItems(int width, int height, ImageItem activeItem)
         {
-            if (playBitmap != null && activeItem == currentActiveItem)
+            // Only generate bitmapOfStaticItems once for all placements of activeItem
+            if (bitmapOfStaticItems != null && activeItem == currentActiveItem)
                 return;
 
-            if (playBitmap != null)
-                playBitmap.Dispose();
-            playBitmap = new Bitmap(width, height);
+            if (bitmapOfStaticItems != null)
+                bitmapOfStaticItems.Dispose(); // Only Dispose() when generating next bitmapOfStaticItems
+            bitmapOfStaticItems = new Bitmap(width, height);
             currentActiveItem = activeItem;
 
-            Graphics bitmapG = Graphics.FromImage(playBitmap);
+            Graphics bitmapG = Graphics.FromImage(bitmapOfStaticItems);
             bitmapG.SetClip(new Rectangle(0, 0, width, height));
-            bitmapG.TranslateTransform(width / 2, height / 2);
-            bitmapG.FillRectangle(Brushes.Black, -width / 2, -height / 2, width, height);
+            bitmapG.DrawRectangle(Pens.Red, 0, 0, width-1, height-1);
+            bitmapG.TranslateTransform(width / 2, height / 2); // center (0,0)
             bitmapG.ScaleTransform(ScreensaverForm.ScaleFactor, ScreensaverForm.ScaleFactor); // Scale down to fit 
 
             foreach (ImageItem item in Items)
@@ -104,10 +105,10 @@ namespace DevinDow.VisionBoard
             Graphics bitmapG = Graphics.FromImage(bitmap);
 
             // draw playBitmap of all items except activeItem to bitmapG
-            getPlayBitmap(width, height, activeItem);
+            getBitmapOfStaticItems(width, height, activeItem);
 
             bitmapG.SetClip(new Rectangle(0, 0, width, height));
-            bitmapG.DrawImage(playBitmap, 0, 0);
+            bitmapG.DrawImage(bitmapOfStaticItems, 0, 0);
             bitmapG.TranslateTransform(width / 2, height / 2);
             bitmapG.ScaleTransform(ScreensaverForm.ScaleFactor, ScreensaverForm.ScaleFactor);
 
