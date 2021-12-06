@@ -30,11 +30,8 @@ namespace DevinDow.VisionBoard
             this.SetStyle(ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer, true);
         }
 
-        public MainForm(string path)
+        public MainForm(string path) : this()
         {
-            InitializeComponent();
-            this.SetStyle(ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer, true);
-
             if (path.Length > 0)
                 VisionBoard.Current = vbdFile.Read(path);
         }
