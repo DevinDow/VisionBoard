@@ -24,7 +24,7 @@ namespace DevinDow.VisionBoard
                     Application.Run(new MainForm());
                 else
                 {
-                    char argParam = args[0].Trim().ToLower()[1]; // "/s" or "/w" or "/p" or "/c"
+                    char argParam = args[0].Trim().ToLower()[1]; // "/s" or "/w" or "/p" "HWND" or "/c:HWND"
                     switch (argParam)
                     {
                         case 's': // Execute Screensaver
@@ -39,6 +39,8 @@ namespace DevinDow.VisionBoard
                             break;
 
                         case 'p': // Execute Preview in Preview Window - involves creating and joining threads
+                            IntPtr previewHandle = new IntPtr(long.Parse(args[1]));
+                            new ScreensaverForm(previewHandle).ShowDialog();
                             break;
 
                         case 'c': // Options Dialog

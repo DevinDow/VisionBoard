@@ -40,6 +40,27 @@ namespace DevinDow.VisionBoard
             Cursor.Hide();
         }
 
+        public ScreensaverForm(IntPtr previewHandle) : this()
+        {
+            //WindowState = FormWindowState.Normal;
+
+            // Set the preview window of the screen saver selection 
+            // dialog in Windows as the parent of this form.
+            SetParent(this.Handle, previewHandle);
+
+            // Set this form to a child form, so that when the screen saver selection 
+            // dialog in Windows is closed, this form will also close.
+            SetWindowLong(this.Handle, -16, new IntPtr(GetWindowLong(this.Handle, -16) | 0x40000000));
+
+            // Set the size of the screen saver to the size of the screen saver 
+            // preview window in the screen saver selection dialog in Windows.
+            Rectangle ParentRect;
+            GetClientRect(previewHandle, out ParentRect);
+            this.Size = ParentRect.Size;
+
+            this.Location = new Point(0, 0);
+        }
+
 
         // Private Events
         private void ScreensaverForm_Load(object sender, EventArgs e)
@@ -142,6 +163,25 @@ namespace DevinDow.VisionBoard
                     | EXECUTION_STATE.ES_DISPLAY_REQUIRED
                     | EXECUTION_STATE.ES_SYSTEM_REQUIRED); //Windows < Vista, forget away mode
         }
+        #endregion
+
+
+        #region SetParent()
+        // Changes the parent window of the specified child window
+        [DllImport("user32.dll")]
+        private static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
+
+        // Changes an attribute of the specified window
+        [DllImport("user32.dll")]
+        private static extern int SetWindowLong(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
+
+        // Retrieves information about the specified window
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+
+        // Retrieves the coordinates of a window's client area
+        [DllImport("user32.dll")]
+        private static extern bool GetClientRect(IntPtr hWnd, out Rectangle lpRect);
         #endregion
     }
 }

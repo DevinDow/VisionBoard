@@ -23,7 +23,7 @@ namespace DevinDow.VisionBoard
                 // write current VisionBoard to ScreensaverVisionBoardPath
                 vbdFile.Write(ScreensaverForm.ScreensaverVisionBoardPath, VisionBoard.Current);
 
-                // launch default action on .scr, which is either "Install" or "Test"
+                // launch default action on .scr, which is either "Install" or "Test"  (This will set this binary as the bits to be run, so this is needed on each new build.)
                 System.Diagnostics.Process.Start(scrPath);
             }
             catch (Exception ex)
