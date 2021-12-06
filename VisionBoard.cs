@@ -65,8 +65,7 @@ namespace DevinDow.VisionBoard
             Graphics bitmapG = Graphics.FromImage(playBitmap);
             bitmapG.SetClip(new Rectangle(0, 0, width, height));
             bitmapG.TranslateTransform(width / 2, height / 2);
-            float bitmapScale = Math.Min(1.0f * width / Bounds.Width, 1.0f * height / Bounds.Height);
-            bitmapG.ScaleTransform(bitmapScale, bitmapScale);
+            bitmapG.ScaleTransform(ScreensaverForm.Scale, ScreensaverForm.Scale);
 
             bitmapG.FillRectangle(Brushes.Black, -width / 2, -height / 2, width, height);
 
@@ -111,6 +110,7 @@ namespace DevinDow.VisionBoard
             bitmapG.SetClip(new Rectangle(0, 0, width, height));
             bitmapG.DrawImage(playBitmap, 0, 0);
             bitmapG.TranslateTransform(width / 2, height / 2);
+            bitmapG.ScaleTransform(ScreensaverForm.Scale, ScreensaverForm.Scale);
 
             // actualStep between original position & zoomed-in position
             int actualStep;

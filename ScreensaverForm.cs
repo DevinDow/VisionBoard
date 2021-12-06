@@ -15,6 +15,7 @@ namespace DevinDow.VisionBoard
     {
         // Public Static Fields
         public static bool PreventSleep = false;
+        public static float Scale = 1.0f;
 
 
         // Public Statis Properties
@@ -83,6 +84,8 @@ namespace DevinDow.VisionBoard
                 VisionBoard.Current.ItemEnumerator = VisionBoard.Current.Items.GetEnumerator();
                 VisionBoard.Current.ItemEnumerator.MoveNext();
                 VisionBoard.Current.Step = 0;
+
+                Scale = Math.Max(1.0f * Width / VisionBoard.Current.Bounds.Width, 1.0f * Height / VisionBoard.Current.Bounds.Height); // Fit the VisionBoard.Bounds within screen (or Windows Screensaver Dialog preview window)
             }
         }
 
