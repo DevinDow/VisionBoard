@@ -65,9 +65,8 @@ namespace DevinDow.VisionBoard
             Graphics bitmapG = Graphics.FromImage(playBitmap);
             bitmapG.SetClip(new Rectangle(0, 0, width, height));
             bitmapG.TranslateTransform(width / 2, height / 2);
-            bitmapG.ScaleTransform(ScreensaverForm.ScaleFactor, ScreensaverForm.ScaleFactor);
-
             bitmapG.FillRectangle(Brushes.Black, -width / 2, -height / 2, width, height);
+            bitmapG.ScaleTransform(ScreensaverForm.ScaleFactor, ScreensaverForm.ScaleFactor); // Scale down to fit 
 
             foreach (ImageItem item in Items)
                 if (item != activeItem)
