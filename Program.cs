@@ -38,10 +38,11 @@ namespace DevinDow.VisionBoard
                             Application.Run(new ScreensaverForm());
                             break;
 
-                        case 'p': // Execute Preview - involves creating and joining threads
+                        case 'p': // Execute Preview in Preview Window - involves creating and joining threads
                             break;
 
                         case 'c': // Options Dialog
+                            Application.Run(new MainForm(ScreensaverForm.ScreensaverVisionBoardPath));
                             break;
 
                         default:
