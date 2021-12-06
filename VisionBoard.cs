@@ -133,7 +133,7 @@ namespace DevinDow.VisionBoard
             if (activeItem.Y > 0)
                 y = -y;
             float rot = -activeItem.RotationDegrees / HalfwayStep * actualStep;
-            float maxScale = Math.Min(width * 0.95f / activeItem.Size.Width, height * 0.95f / activeItem.Size.Height);
+            float maxScale = Math.Min(width * 0.95f / ScreensaverForm.Scale / activeItem.Size.Width, height * 0.95f / ScreensaverForm.Scale / activeItem.Size.Height);
             float scale = 1 + (maxScale - 1) * actualStep / HalfwayStep;
             if (scale == 0)
                 scale = 1;
