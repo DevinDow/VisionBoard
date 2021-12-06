@@ -20,14 +20,20 @@ namespace DevinDow.VisionBoard
 
                 Properties.Settings.Default.Upgrade();
 
-                if (args.Length == 0)
+                if (args.Length == 0) // run full VisionBoard editing app
                     Application.Run(new MainForm());
                 else
                 {
-                    char argParam = args[0].Trim().ToLower()[1];
+                    char argParam = args[0].Trim().ToLower()[1]; // "/s" or "/w" or "/p" or "/c"
                     switch (argParam)
                     {
                         case 's': // Execute Screensaver
+                            Cursor.Hide();
+                            Application.Run(new ScreensaverForm());
+                            break;
+
+                        case 'w': // Wake = execute Screensaver while preventing Sleep
+                            ScreensaverForm.PreventSleep = true;
                             Cursor.Hide();
                             Application.Run(new ScreensaverForm());
                             break;

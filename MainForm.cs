@@ -320,6 +320,7 @@ namespace DevinDow.VisionBoard
         // View
         private void miPlay_Click(object sender, EventArgs e)
         {
+            ScreensaverForm.PreventSleep = true;
             ScreensaverForm form = new ScreensaverForm();
             form.Show();
         }
@@ -427,7 +428,7 @@ namespace DevinDow.VisionBoard
         #endregion
 
 
-        #region Methods
+        #region associateVbdExtension()
         [DllImport("shell32.dll")]
         static extern void SHChangeNotify(long wEventId, uint uFlags, IntPtr dwItem1, IntPtr dwItem2);
         private void associateVbdExtension()
