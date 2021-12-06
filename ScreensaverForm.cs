@@ -84,8 +84,8 @@ namespace DevinDow.VisionBoard
                 VisionBoard.Current.ItemEnumerator = VisionBoard.Current.Items.GetEnumerator();
                 VisionBoard.Current.ItemEnumerator.MoveNext();
                 VisionBoard.Current.Step = 0;
-
-                Scale = Math.Min(1.0f * Width / VisionBoard.Current.Bounds.Width, 1.0f * Height / VisionBoard.Current.Bounds.Height); // Fit the VisionBoard.Bounds within screen (or Windows Screensaver Dialog preview window)
+                
+                Scale = Math.Min(1.0f * Width / Screen.PrimaryScreen.Bounds.Width, 1.0f * Height / Screen.PrimaryScreen.Bounds.Height); // Fit the VisionBoard.Bounds within screen (or Windows Screensaver Dialog preview window)
             }
         }
 
