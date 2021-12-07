@@ -1,8 +1,6 @@
 ﻿TODO
 ----
 
-BUG: Play not using modified Items' positions
-
 - Draw in reverse order
 - longer pause, number hotkeys for pause duration, space hotkey for pause/unpause, arrow hotkeys for advancing
 

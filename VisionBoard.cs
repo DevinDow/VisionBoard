@@ -51,31 +51,6 @@ namespace DevinDow.VisionBoard
         private ImageItem currentActiveItem;
 
 
-        // Private Properties
-        private void getBitmapOfStaticItems(int width, int height, ImageItem activeItem)
-        {
-            // Only generate bitmapOfStaticItems once for all placements of activeItem
-            if (bitmapOfStaticItems != null && activeItem == currentActiveItem)
-                return;
-
-            if (bitmapOfStaticItems != null)
-                bitmapOfStaticItems.Dispose(); // Only Dispose() when generating next bitmapOfStaticItems
-            bitmapOfStaticItems = new Bitmap(width, height);
-            currentActiveItem = activeItem;
-
-            Graphics bitmapG = Graphics.FromImage(bitmapOfStaticItems);
-            bitmapG.SetClip(new Rectangle(0, 0, width, height));
-            bitmapG.TranslateTransform(width / 2, height / 2); // center (0,0)
-            bitmapG.ScaleTransform(ScreensaverForm.ScaleFactor, ScreensaverForm.ScaleFactor); // Scale down to fit 
-
-            foreach (ImageItem item in Items)
-                if (item != activeItem)
-                    item.Draw(bitmapG);
-
-            bitmapG.Dispose();
-        }
-
-
         // Public Methods
         public Bitmap GetBitmap(int width, int height)
         {
@@ -95,7 +70,21 @@ namespace DevinDow.VisionBoard
                 item.Draw(g);
         }
 
-        public void Play(Graphics g, int width, int height)
+        public void InitPlaying()
+        {
+            VisionBoard.Current.ItemEnumerator = VisionBoard.Current.Items.GetEnumerator();
+            VisionBoard.Current.ItemEnumerator.MoveNext();
+            VisionBoard.Current.Step = 0;
+
+            // clear previous bitmapOfStaticItems to generate a new one
+            if (bitmapOfStaticItems != null)
+            {
+                bitmapOfStaticItems.Dispose();
+                bitmapOfStaticItems = null;
+            }
+        }
+
+        public void PlayAStep(Graphics g, int width, int height)
         {
             ImageItem activeItem = (ImageItem)ItemEnumerator.Current;
 
@@ -141,6 +130,31 @@ namespace DevinDow.VisionBoard
 
             // draw the bitmap to the screen
             g.DrawImage(bitmap, 0, 0);
+
+            bitmapG.Dispose();
+        }
+
+
+        // Private Methods
+        private void getBitmapOfStaticItems(int width, int height, ImageItem activeItem)
+        {
+            // Only generate bitmapOfStaticItems once for all placements of activeItem
+            if (bitmapOfStaticItems != null && activeItem == currentActiveItem)
+                return;
+
+            if (bitmapOfStaticItems != null)
+                bitmapOfStaticItems.Dispose(); // Only Dispose() when generating next bitmapOfStaticItems
+            bitmapOfStaticItems = new Bitmap(width, height);
+            currentActiveItem = activeItem;
+
+            Graphics bitmapG = Graphics.FromImage(bitmapOfStaticItems);
+            bitmapG.SetClip(new Rectangle(0, 0, width, height));
+            bitmapG.TranslateTransform(width / 2, height / 2); // center (0,0)
+            bitmapG.ScaleTransform(ScreensaverForm.ScaleFactor, ScreensaverForm.ScaleFactor); // Scale down to fit 
+
+            foreach (ImageItem item in Items)
+                if (item != activeItem)
+                    item.Draw(bitmapG);
 
             bitmapG.Dispose();
         }
