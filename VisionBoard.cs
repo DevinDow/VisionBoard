@@ -18,17 +18,18 @@ namespace DevinDow.VisionBoard
         public int NextIndex = 1;
         public bool IsDirty = false;
         public ArrayList Items = new ArrayList();
-        public IEnumerator ItemEnumerator;
-
-        // ticks in ScreenSaver
-        public int Step;
-        public const int MaxStep = 100; // total number of ticks per picture
-        public const int PauseSteps = 20; // ticks to pause
-        public const int HalfwayStep = MaxStep / 2 - PauseSteps / 2;
 
         public bool Reordering = false;
         public int OrderIndex;
         public int ReorderCurrentIndex;
+
+        // Private Fields
+        // Steps in ScreenSaver
+        private IEnumerator ItemEnumerator;
+        private int Step;
+        private const int MaxStep = 100; // total number of ticks per picture
+        private const int PauseSteps = 20; // ticks to pause
+        private const int HalfwayStep = MaxStep / 2 - PauseSteps / 2;
 
 
         // Public Properties
@@ -132,6 +133,21 @@ namespace DevinDow.VisionBoard
             g.DrawImage(bitmap, 0, 0);
 
             bitmapG.Dispose();
+        }
+
+        public void NextStep()
+        {
+            Step++;
+
+            if (Step >= VisionBoard.MaxStep)
+            {
+                if (!ItemEnumerator.MoveNext())
+                {
+                    ItemEnumerator.Reset();
+                    ItemEnumerator.MoveNext();
+                }
+                Step = 0;
+            }
         }
 
 

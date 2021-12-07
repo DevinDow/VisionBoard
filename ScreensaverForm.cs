@@ -42,7 +42,7 @@ namespace DevinDow.VisionBoard
             Cursor.Hide();
         }
 
-        public ScreensaverForm(IntPtr previewWindowHandle) : this()
+        public ScreensaverForm(IntPtr previewWindowHandle) : this() // used to Preview the Screensaver in the Windows Screensaver Dialog's Preview Window
         {
             isInPreviewDialog = true;
 
@@ -61,7 +61,7 @@ namespace DevinDow.VisionBoard
 
 
         // Private Events
-        private void ScreensaverForm_Load(object sender, EventArgs e)
+        private void ScreensaverForm_Load(object sender, EventArgs e) // Init Sccreensaver
         {
             if (VisionBoard.Current == null)
             {
@@ -82,28 +82,12 @@ namespace DevinDow.VisionBoard
                 ScaleFactor = Math.Min(1.0f * Width / Screen.PrimaryScreen.Bounds.Width, 1.0f * Height / Screen.PrimaryScreen.Bounds.Height); // Fit the VisionBoard.Bounds within screen (or Windows Screensaver Dialog preview window)
         }
 
-        private void ScreensaverForm_Paint(object sender, PaintEventArgs e)
-        {
-            if (VisionBoard.Current != null)
-                VisionBoard.Current.PlayAStep(e.Graphics, Width, Height);
-        }
-
-        private void timer_Tick(object sender, EventArgs e)
+        private void timer_Tick(object sender, EventArgs e) // Advance one Frame
         {
             if (VisionBoard.Current == null)
                 return;
 
-            VisionBoard.Current.Step++;
-
-            if (VisionBoard.Current.Step >= VisionBoard.MaxStep)
-            {
-                if (!VisionBoard.Current.ItemEnumerator.MoveNext())
-                {
-                    VisionBoard.Current.ItemEnumerator.Reset();
-                    VisionBoard.Current.ItemEnumerator.MoveNext();
-                }
-                VisionBoard.Current.Step = 0;
-            }
+            VisionBoard.Current.NextStep();
 
             Invalidate();
 
@@ -111,7 +95,14 @@ namespace DevinDow.VisionBoard
                 preventSleep();
         }
 
+        private void ScreensaverForm_Paint(object sender, PaintEventArgs e) // Draw a Frame
+        {
+            if (VisionBoard.Current != null)
+                VisionBoard.Current.PlayAStep(e.Graphics, Width, Height);
+        }
 
+
+        // End Screensaver
         private void ScreensaverForm_KeyDown(object sender, KeyEventArgs e)
         {
             this.Close();
