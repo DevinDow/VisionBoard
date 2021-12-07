@@ -52,12 +52,11 @@ namespace DevinDow.VisionBoard
             // set this as a Child so it closes when Windows Screensaver dialog closes
             SetWindowLong(this.Handle, GWL_STYLE, new IntPtr(GetWindowLong(this.Handle, GWL_STYLE) | WS_CHILD));
 
-            // Set the size of the screen saver to the size of the screen saver 
-            // preview window in the screen saver selection dialog in Windows.
+            /*// set Size & Location
             Rectangle ParentRect;
             GetClientRect(previewWindowHandle, out ParentRect);
-            //MessageBox.Show(ParentRect.ToString());
-            //this.Size = ParentRect.Size;
+            this.Size = ParentRect.Size;
+            this.Location = new Point(0, 0);*/
         }
 
 
@@ -81,7 +80,7 @@ namespace DevinDow.VisionBoard
             VisionBoard.Current.ItemEnumerator.MoveNext();
             VisionBoard.Current.Step = 0;
 
-            if (isInPreviewDialog)                
+            if (isInPreviewDialog)
                 ScaleFactor = Math.Min(1.0f * Width / Screen.PrimaryScreen.Bounds.Width, 1.0f * Height / Screen.PrimaryScreen.Bounds.Height); // Fit the VisionBoard.Bounds within screen (or Windows Screensaver Dialog preview window)
         }
 
