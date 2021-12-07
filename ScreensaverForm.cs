@@ -30,6 +30,7 @@ namespace DevinDow.VisionBoard
 
 
         // Private Fields
+        private bool isInPreviewDialog = false;
         private Point mousePoint;
 
 
@@ -41,25 +42,22 @@ namespace DevinDow.VisionBoard
             Cursor.Hide();
         }
 
-        public ScreensaverForm(IntPtr previewHandle) : this()
+        public ScreensaverForm(IntPtr previewWindowHandle) : this()
         {
-            //WindowState = FormWindowState.Normal;
+            isInPreviewDialog = true;
 
-            // Set the preview window of the screen saver selection 
-            // dialog in Windows as the parent of this form.
-            SetParent(this.Handle, previewHandle);
+            // set previewWindowHandle as the Parent of this
+            SetParent(this.Handle, previewWindowHandle);
 
-            // Set this form to a child form, so that when the screen saver selection 
-            // dialog in Windows is closed, this form will also close.
+            // set this as a Child so it closes when Windows Screensaver dialog closes
             SetWindowLong(this.Handle, -16, new IntPtr(GetWindowLong(this.Handle, -16) | 0x40000000));
 
             // Set the size of the screen saver to the size of the screen saver 
             // preview window in the screen saver selection dialog in Windows.
             Rectangle ParentRect;
-            GetClientRect(previewHandle, out ParentRect);
-            this.Size = ParentRect.Size;
-
-            this.Location = new Point(0, 0);
+            GetClientRect(previewWindowHandle, out ParentRect);
+            //MessageBox.Show(ParentRect.ToString());
+            //this.Size = ParentRect.Size;
         }
 
 
@@ -79,14 +77,12 @@ namespace DevinDow.VisionBoard
                 }
             }
 
-            if (VisionBoard.Current != null)
-            {
-                VisionBoard.Current.ItemEnumerator = VisionBoard.Current.Items.GetEnumerator();
-                VisionBoard.Current.ItemEnumerator.MoveNext();
-                VisionBoard.Current.Step = 0;
-                
+            VisionBoard.Current.ItemEnumerator = VisionBoard.Current.Items.GetEnumerator();
+            VisionBoard.Current.ItemEnumerator.MoveNext();
+            VisionBoard.Current.Step = 0;
+
+            if (isInPreviewDialog)                
                 ScaleFactor = Math.Min(1.0f * Width / Screen.PrimaryScreen.Bounds.Width, 1.0f * Height / Screen.PrimaryScreen.Bounds.Height); // Fit the VisionBoard.Bounds within screen (or Windows Screensaver Dialog preview window)
-            }
         }
 
         private void ScreensaverForm_Paint(object sender, PaintEventArgs e)

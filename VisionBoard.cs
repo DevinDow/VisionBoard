@@ -65,7 +65,6 @@ namespace DevinDow.VisionBoard
 
             Graphics bitmapG = Graphics.FromImage(bitmapOfStaticItems);
             bitmapG.SetClip(new Rectangle(0, 0, width, height));
-            bitmapG.DrawRectangle(Pens.Red, 0, 0, width-1, height-1);
             bitmapG.TranslateTransform(width / 2, height / 2); // center (0,0)
             bitmapG.ScaleTransform(ScreensaverForm.ScaleFactor, ScreensaverForm.ScaleFactor); // Scale down to fit 
 
@@ -103,14 +102,15 @@ namespace DevinDow.VisionBoard
             // bitmap to draw to and its bitmapG Graphics object
             Bitmap bitmap = new Bitmap(width, height);
             Graphics bitmapG = Graphics.FromImage(bitmap);
-
-            // draw playBitmap of all items except activeItem to bitmapG
-            getBitmapOfStaticItems(width, height, activeItem);
-
             bitmapG.SetClip(new Rectangle(0, 0, width, height));
-            bitmapG.DrawImage(bitmapOfStaticItems, 0, 0);
-            bitmapG.TranslateTransform(width / 2, height / 2);
-            bitmapG.ScaleTransform(ScreensaverForm.ScaleFactor, ScreensaverForm.ScaleFactor);
+
+            // draw bitmapOfStaticItems of all items except activeItem to bitmapG
+            getBitmapOfStaticItems(width, height, activeItem);
+            //bitmapG.DrawImage(bitmapOfStaticItems, 0, 0);
+            bitmapG.DrawRectangle(Pens.Red, 0, 0, width - 1, height - 1);
+
+            bitmapG.TranslateTransform(width / 2, height / 2); // center (0,0)
+            bitmapG.ScaleTransform(ScreensaverForm.ScaleFactor, ScreensaverForm.ScaleFactor); // Scale down to fit
 
             // actualStep between original position & zoomed-in position
             int actualStep;
