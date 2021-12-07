@@ -105,7 +105,15 @@ namespace DevinDow.VisionBoard
         // End Screensaver
         private void ScreensaverForm_KeyDown(object sender, KeyEventArgs e)
         {
-            this.Close();
+            switch (e.KeyCode)
+            {
+                case Keys.Space:
+                    timer.Enabled = !timer.Enabled;
+                    break;
+                default:
+                    this.Close();
+                    break;
+            }
         }
         private void ScreensaverForm_MouseDown(object sender, MouseEventArgs e)
         {
