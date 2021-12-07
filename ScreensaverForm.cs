@@ -108,13 +108,19 @@ namespace DevinDow.VisionBoard
             switch (e.KeyCode)
             {
                 case Keys.Space:
-                    timer.Enabled = !timer.Enabled;
+                    timer.Enabled = !timer.Enabled; // pause wherever it is
                     break;
                 case Keys.Right:
-                    VisionBoard.Current.NextItem();
+                    VisionBoard.Current.NextItem(); // next Item at Step 0
+                    timer.Enabled = true; // only makes sense if it's running
+                    break;
+                case Keys.Up:
+                    timer.Enabled = false; // pause
+                    VisionBoard.Current.NextItem(true); // next Item at Max
+                    Invalidate();
                     break;
                 default:
-                    this.Close();
+                    this.Close(); // all other Keys end Screensaver
                     break;
             }
         }
