@@ -86,7 +86,7 @@ namespace DevinDow.VisionBoard
 
         public void PlayAStep(Graphics g, int width, int height)
         {
-            if (itemIndex >= Items.Count)
+            if (itemIndex >= Items.Count || itemIndex < 0)
                 return;
             ImageItem activeItem = (ImageItem)Items[itemIndex];
 
@@ -138,10 +138,13 @@ namespace DevinDow.VisionBoard
 
         public void NextStep()
         {
-            Step++;
-
-            if (Step >= VisionBoard.MaxStep)
+            if (Step < VisionBoard.MaxStep)
+                Step++;
+            else
+            {
                 NextItem();
+                Reset();
+            }
         }
 
         public void NextItem()
