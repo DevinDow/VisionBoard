@@ -25,7 +25,7 @@ namespace DevinDow.VisionBoard
 
         // Private Fields
         // Steps in ScreenSaver
-        private IEnumerator ItemEnumerator;
+        private int itemIndex;
         private int Step;
         private const int MaxStep = 100; // total number of ticks per picture
         private const int PauseSteps = 20; // ticks to pause
@@ -73,8 +73,7 @@ namespace DevinDow.VisionBoard
 
         public void InitPlaying()
         {
-            VisionBoard.Current.ItemEnumerator = VisionBoard.Current.Items.GetEnumerator();
-            VisionBoard.Current.ItemEnumerator.MoveNext();
+            VisionBoard.Current.itemIndex = 0;
             VisionBoard.Current.Step = 0;
 
             // clear previous bitmapOfStaticItems to generate a new one
@@ -87,7 +86,9 @@ namespace DevinDow.VisionBoard
 
         public void PlayAStep(Graphics g, int width, int height)
         {
-            ImageItem activeItem = (ImageItem)ItemEnumerator.Current;
+            if (itemIndex >= Items.Count)
+                return;
+            ImageItem activeItem = (ImageItem)Items[itemIndex];
 
             // bitmap to draw to and its bitmapG Graphics object
             Bitmap bitmap = new Bitmap(width, height);
@@ -143,17 +144,28 @@ namespace DevinDow.VisionBoard
                 NextItem();
         }
 
-        public void NextItem(bool max = false)
+        public void NextItem()
         {
-            if (!ItemEnumerator.MoveNext())
-            {
-                ItemEnumerator.Reset();
-                ItemEnumerator.MoveNext();
-            }
-            if (max)
-                Step = MaxStep / 2;
-            else
-                Step = 0;
+            itemIndex++;
+            if (itemIndex >= Items.Count)
+                itemIndex = 0;
+        }
+
+        public void PrevItem()
+        {
+            itemIndex--;
+            if (itemIndex < 0)
+                itemIndex = Items.Count-1;
+        }
+
+        public void Reset()
+        {
+            Step = 0;
+        }
+
+        public void Maximize()
+        {
+            Step = MaxStep / 2;
         }
 
 

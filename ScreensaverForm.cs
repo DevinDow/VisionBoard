@@ -107,16 +107,33 @@ namespace DevinDow.VisionBoard
         {
             switch (e.KeyCode)
             {
-                case Keys.Space:
+                case Keys.Space: // Pause / Play
                     timer.Enabled = !timer.Enabled; // pause wherever it is
                     break;
-                case Keys.Right:
-                    VisionBoard.Current.NextItem(); // next Item at Step 0
+                case Keys.Right: // play from Next
+                    VisionBoard.Current.NextItem(); // next Item
+                    VisionBoard.Current.Reset(); // at Step 0
+                    timer.Enabled = true; // only makes sense if it's running
+                    break;
+                case Keys.Left: // play from Prev
+                    VisionBoard.Current.PrevItem(); // prev Item
+                    VisionBoard.Current.Reset(); // at Step 0
                     timer.Enabled = true; // only makes sense if it's running
                     break;
                 case Keys.Up:
-                    timer.Enabled = false; // pause
-                    VisionBoard.Current.NextItem(true); // next Item at Max
+                    if (timer.Enabled) // running
+                        timer.Enabled = false; // pause
+                    else
+                        VisionBoard.Current.NextItem(); // next Item
+                    VisionBoard.Current.Maximize(); // maximize
+                    Invalidate();
+                    break;
+                case Keys.Down:
+                    if (timer.Enabled) // running
+                        timer.Enabled = false; // pause
+                    else
+                        VisionBoard.Current.PrevItem(); // prev Item
+                    VisionBoard.Current.Maximize(); // maximize
                     Invalidate();
                     break;
                 default:
