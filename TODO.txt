@@ -3,10 +3,6 @@
 
 BUG: Play not using modified Items' positions
 
-- Scaling code can be improved (for Windows Screensaver preview window & when VB doesn't fit Window)
-	- center offset is not right
-	- ideally Background bitmap lines up with Screensavr
-
 - Draw in reverse order
 - longer pause, number hotkeys for pause duration, space hotkey for pause/unpause, arrow hotkeys for advancing
 
