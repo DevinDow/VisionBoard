@@ -140,14 +140,17 @@ namespace DevinDow.VisionBoard
             Step++;
 
             if (Step >= VisionBoard.MaxStep)
+                NextItem();
+        }
+
+        public void NextItem()
+        {
+            if (!ItemEnumerator.MoveNext())
             {
-                if (!ItemEnumerator.MoveNext())
-                {
-                    ItemEnumerator.Reset();
-                    ItemEnumerator.MoveNext();
-                }
-                Step = 0;
+                ItemEnumerator.Reset();
+                ItemEnumerator.MoveNext();
             }
+            Step = 0;
         }
 
 

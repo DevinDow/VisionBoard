@@ -110,6 +110,9 @@ namespace DevinDow.VisionBoard
                 case Keys.Space:
                     timer.Enabled = !timer.Enabled;
                     break;
+                case Keys.Right:
+                    VisionBoard.Current.NextItem();
+                    break;
                 default:
                     this.Close();
                     break;
