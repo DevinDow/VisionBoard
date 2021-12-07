@@ -50,7 +50,7 @@ namespace DevinDow.VisionBoard
             SetParent(this.Handle, previewWindowHandle);
 
             // set this as a Child so it closes when Windows Screensaver dialog closes
-            SetWindowLong(this.Handle, -16, new IntPtr(GetWindowLong(this.Handle, -16) | 0x40000000));
+            SetWindowLong(this.Handle, GWL_STYLE, new IntPtr(GetWindowLong(this.Handle, GWL_STYLE) | WS_CHILD));
 
             // Set the size of the screen saver to the size of the screen saver 
             // preview window in the screen saver selection dialog in Windows.
@@ -166,6 +166,9 @@ namespace DevinDow.VisionBoard
 
 
         #region SetParent()
+        private const int GWL_STYLE = -16;
+        private const int WS_CHILD = 0x40000000;
+
         // Changes the parent window of the specified child window
         [DllImport("user32.dll")]
         private static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
