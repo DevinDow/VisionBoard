@@ -102,12 +102,11 @@ namespace DevinDow.VisionBoard
             // bitmap to draw to and its bitmapG Graphics object
             Bitmap bitmap = new Bitmap(width, height);
             Graphics bitmapG = Graphics.FromImage(bitmap);
-            bitmapG.SetClip(new Rectangle(0, 0, width, height));
+            //bitmapG.SetClip(new Rectangle(0, 0, width, height));
 
             // draw bitmapOfStaticItems of all items except activeItem to bitmapG
             getBitmapOfStaticItems(width, height, activeItem);
-            //bitmapG.DrawImage(bitmapOfStaticItems, 0, 0);
-            bitmapG.DrawRectangle(Pens.Red, 0, 0, width - 1, height - 1);
+            bitmapG.DrawImage(bitmapOfStaticItems, 0, 0);
 
             bitmapG.TranslateTransform(width / 2, height / 2); // center (0,0)
             bitmapG.ScaleTransform(ScreensaverForm.ScaleFactor, ScreensaverForm.ScaleFactor); // Scale down to fit
