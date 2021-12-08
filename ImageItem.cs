@@ -77,17 +77,15 @@ namespace DevinDow.VisionBoard
                 float numSize = handleSize * 4;
                 Brush brush = Brushes.Red;
                 if (VisionBoard.Current.OrderIndex < VisionBoard.Current.ReorderCurrentIndex)
-                {
                     brush = Brushes.Green;
-                }
                 g.FillRectangle(brush, -numSize, -numSize, numSize * 2, numSize * 2);
 
                 Font font = new Font(FontFamily.GenericSerif, numSize);
                 StringFormat format = new StringFormat();
                 format.Alignment = StringAlignment.Center;
                 format.LineAlignment = StringAlignment.Center;
-                g.DrawString((VisionBoard.Current.OrderIndex+1).ToString(), font, Brushes.Black, 0, 0, format);
-                VisionBoard.Current.OrderIndex++;
+                g.DrawString(VisionBoard.Current.OrderIndex.ToString(), font, Brushes.Black, 0, 0, format);
+                VisionBoard.Current.OrderIndex--;
             }
 
             // Selected

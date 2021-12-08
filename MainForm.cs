@@ -61,18 +61,13 @@ namespace DevinDow.VisionBoard
             // Reordering
             if (VisionBoard.Current.Reordering)
             {
-                VisionBoard.Current.OrderIndex = 0;
+                VisionBoard.Current.OrderIndex = VisionBoard.Current.Items.Count;
                 VisionBoard.Current.Draw(bitmapG);
             }
             else
             {
                 // Draw Non-Selected to Bitmap
-                for (int i = VisionBoard.Current.Items.Count - 1; i >= 0; i--)
-                {
-                    ImageItem item = (ImageItem)VisionBoard.Current.Items[i];
-                    if (item != selectedItem)
-                        item.Draw(bitmapG);
-                }
+                VisionBoard.Current.Draw(bitmapG, selectedItem);
 
                 // Draw Selected to Bitmap
                 if (selectedItem != null)
@@ -171,7 +166,7 @@ namespace DevinDow.VisionBoard
                 {
                     ImageItem item = (ImageItem)VisionBoard.Current.Items[i];
 
-                    if (VisionBoard.Current.Reordering && VisionBoard.Current.ReorderCurrentIndex > i)
+                    if (VisionBoard.Current.Reordering && VisionBoard.Current.ReorderCurrentIndex - 1 > i)
                         continue;
 
                     if (item.HitTest(clickedPoint.X, clickedPoint.Y))
@@ -188,16 +183,16 @@ namespace DevinDow.VisionBoard
                 if (VisionBoard.Current.Reordering && selectedIndex >= 0)
                 {
                     // change order
-                    if (selectedIndex != VisionBoard.Current.ReorderCurrentIndex)
+                    if (selectedIndex != VisionBoard.Current.ReorderCurrentIndex - 1)
                     {
                         VisionBoard.Current.Items.RemoveAt(selectedIndex);
-                        VisionBoard.Current.Items.Insert(VisionBoard.Current.ReorderCurrentIndex, selectedItem);
+                        VisionBoard.Current.Items.Insert(VisionBoard.Current.ReorderCurrentIndex - 1, selectedItem);
                         VisionBoard.Current.IsDirty = true;
                     }
 
                     // increment ReorderCurrentIndex
                     VisionBoard.Current.ReorderCurrentIndex++;
-                    if (VisionBoard.Current.ReorderCurrentIndex >= VisionBoard.Current.Items.Count)
+                    if (VisionBoard.Current.ReorderCurrentIndex > VisionBoard.Current.Items.Count)
                         VisionBoard.Current.Reordering = false;
                     
                     selectedItem = null;
@@ -346,7 +341,7 @@ namespace DevinDow.VisionBoard
         {
             selectedItem = null;
             VisionBoard.Current.Reordering = !VisionBoard.Current.Reordering;
-            VisionBoard.Current.ReorderCurrentIndex = 0;
+            VisionBoard.Current.ReorderCurrentIndex = 1;
             Invalidate();
         }
 
