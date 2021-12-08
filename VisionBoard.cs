@@ -64,11 +64,15 @@ namespace DevinDow.VisionBoard
             return bitmap;
         }
 
-        public void Draw(Graphics g)
+        public void Draw(Graphics g, object itemToSkip = null)
         {
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            foreach (ImageItem item in Items)
-                item.Draw(g);
+            for (int i = Items.Count - 1; i >= 0; i--) // Draw in Reverse Order so First ends up on top
+            {
+                ImageItem item = (ImageItem)Items[i];
+                if (item != itemToSkip)
+                    item.Draw(g);
+            }
         }
 
         public void InitPlaying()
@@ -189,9 +193,7 @@ namespace DevinDow.VisionBoard
             bitmapG.TranslateTransform(width / 2, height / 2); // center (0,0)
             bitmapG.ScaleTransform(ScreensaverForm.ScaleFactor, ScreensaverForm.ScaleFactor); // Scale down to fit 
 
-            foreach (ImageItem item in Items)
-                if (item != activeItem)
-                    item.Draw(bitmapG);
+            Draw(bitmapG, activeItem);
 
             bitmapG.Dispose();
         }

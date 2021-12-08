@@ -62,16 +62,17 @@ namespace DevinDow.VisionBoard
             if (VisionBoard.Current.Reordering)
             {
                 VisionBoard.Current.OrderIndex = 0;
-
-                foreach (ImageItem item in VisionBoard.Current.Items)
-                    item.Draw(bitmapG);
+                VisionBoard.Current.Draw(bitmapG);
             }
             else
             {
                 // Draw Non-Selected to Bitmap
-                foreach (ImageItem item in VisionBoard.Current.Items)
+                for (int i = VisionBoard.Current.Items.Count - 1; i >= 0; i--)
+                {
+                    ImageItem item = (ImageItem)VisionBoard.Current.Items[i];
                     if (item != selectedItem)
                         item.Draw(bitmapG);
+                }
 
                 // Draw Selected to Bitmap
                 if (selectedItem != null)
@@ -166,7 +167,7 @@ namespace DevinDow.VisionBoard
                 // Selecting
                 selectedItem = null;
                 int selectedIndex = -1;
-                for (int i=0; i<VisionBoard.Current.Items.Count; i++) // foreach (ImageItem item in VisionBoard.Items)
+                for (int i = 0; i < VisionBoard.Current.Items.Count; i++) // foreach (ImageItem item in VisionBoard.Items)
                 {
                     ImageItem item = (ImageItem)VisionBoard.Current.Items[i];
 
