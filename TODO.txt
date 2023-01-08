@@ -1,5 +1,7 @@
 ﻿TODO
 ----
+- Play prevents Screensaver/Sleep?
+- longer pause, numbers
 
 BUG: Image.FromFile() locks file, therefore save fails on locked filenames
 
