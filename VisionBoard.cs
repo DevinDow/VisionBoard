@@ -17,7 +17,7 @@ namespace DevinDow.VisionBoard
         public string Filename;
         public int NextIndex = 1;
         public bool IsDirty = false;
-        public ArrayList Items = new ArrayList();
+        public List<ImageItem> Items = new List<ImageItem>();
 
         public bool Reordering = false;
         public int OrderIndex;
@@ -69,7 +69,7 @@ namespace DevinDow.VisionBoard
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             for (int i = Items.Count - 1; i >= 0; i--) // Draw in Reverse Order so First ends up on top
             {
-                ImageItem item = (ImageItem)Items[i];
+                ImageItem item = Items[i];
                 if (item != itemToSkip)
                     item.Draw(g);
             }
@@ -92,7 +92,7 @@ namespace DevinDow.VisionBoard
         {
             if (itemIndex >= Items.Count || itemIndex < 0)
                 return;
-            ImageItem activeItem = (ImageItem)Items[itemIndex];
+            ImageItem activeItem = Items[itemIndex];
 
             // bitmap to draw to and its bitmapG Graphics object
             Bitmap bitmap = new Bitmap(width, height);

@@ -8,7 +8,7 @@ using System.Xml;
 
 namespace DevinDow.VisionBoard
 {
-    class ImageItem
+    public class ImageItem
     {
         // Public Constants
         public const int HandleSize = 5;

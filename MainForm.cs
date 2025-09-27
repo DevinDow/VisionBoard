@@ -164,7 +164,7 @@ namespace DevinDow.VisionBoard
                 int selectedIndex = -1;
                 for (int i = 0; i < VisionBoard.Current.Items.Count; i++) // foreach (ImageItem item in VisionBoard.Items)
                 {
-                    ImageItem item = (ImageItem)VisionBoard.Current.Items[i];
+                    ImageItem item = VisionBoard.Current.Items[i];
 
                     if (VisionBoard.Current.Reordering && VisionBoard.Current.ReorderCurrentIndex - 1 > i)
                         continue;
