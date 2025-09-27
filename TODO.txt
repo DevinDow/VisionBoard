@@ -8,6 +8,5 @@
 	- rename files?
 
 GitHub Copilot suggestions
-- Paint() is MainForm.cs & ScreensaverForm.cs recreate bitmaps, so cache these
 - lazy load images in vbdFile.Read()
 - Upgrade to .NET Core/5/6
