@@ -132,8 +132,18 @@ namespace DevinDow.VisionBoard
 
                                 if (File.Exists(path))
                                 {
-                                    item.Image = Image.FromFile(path);
-                                    visionBoard.Items.Add(item);
+                                    try
+                                    {
+                                        using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
+                                        {
+                                            item.Image = Image.FromStream(stream);
+                                        }
+                                        visionBoard.Items.Add(item);
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        MessageBox.Show($"Error loading image {path}: {ex.Message}", "Error");
+                                    }
                                 }
                                 else
                                     MessageBox.Show(path, "File does not exist");
