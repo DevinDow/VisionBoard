@@ -24,4 +24,4 @@ You can click on an image to move, rotate, scale, or delete it (using the handle
 
 You can then animate your **Vision Board** using the View|Play menu, print your **Vision Board**, set it as your **Windows Background**, and set it as your **Screen Saver**.
 
-To install the **Screensaver**, click the "Set as Screensaver" menu item.  The app will create *VisionBoard.scr* and copy your current VisionBoard to *\My Documents\VisionBoard.vbd*.
+To install the **Screensaver**, click the "Set as Screensaver" menu item.  The app will create *VisionBoard.scr* and copy your current VisionBoard to *\My Documents\VisionBoard.vbd*.  (You may need to find *VisionBoard.scr* | R-Click | Install.)
