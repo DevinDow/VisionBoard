@@ -32,32 +32,39 @@ namespace DevinDow.VisionBoard
 
         public static void Write(string filename, VisionBoard visionBoard)
         {
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.Indent = true;
-            settings.IndentChars = ("    ");
-
-            using (XmlWriter writer = XmlWriter.Create(filename, settings))
+            try
             {
-                FileInfo fi = new FileInfo(filename);
-                string imageDirectory = fi.DirectoryName + "\\" + fi.Name.Substring(0, fi.Name.Length - fi.Extension.Length);
-                Directory.CreateDirectory(imageDirectory);
+                XmlWriterSettings settings = new XmlWriterSettings();
+                settings.Indent = true;
+                settings.IndentChars = ("    ");
 
-                writer.WriteStartElement("VisionBoard");
-
-                foreach (ImageItem item in visionBoard.Items)
+                using (XmlWriter writer = XmlWriter.Create(filename, settings))
                 {
-                    item.Write(writer);
-                    string bmpFilename = imageDirectory + "\\" + item.Filename + ".bmp";
-					try { item.Image.Save(bmpFilename); }
-					catch (Exception) { }
+                    FileInfo fi = new FileInfo(filename);
+                    string imageDirectory = fi.DirectoryName + "\\" + fi.Name.Substring(0, fi.Name.Length - fi.Extension.Length);
+                    Directory.CreateDirectory(imageDirectory);
+
+                    writer.WriteStartElement("VisionBoard");
+
+                    foreach (ImageItem item in visionBoard.Items)
+                    {
+                        item.Write(writer);
+                        string bmpFilename = imageDirectory + "\\" + item.Filename + ".bmp";
+                        try { item.Image.Save(bmpFilename); }
+                        catch (Exception) { }
+                    }
+
+                    writer.WriteEndElement();
+
+                    writer.Flush();
                 }
 
-                writer.WriteEndElement();
-
-                writer.Flush();
+                visionBoard.IsDirty = false;
             }
-
-            visionBoard.IsDirty = false;
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
 
